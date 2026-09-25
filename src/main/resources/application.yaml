@@ -1,3 +1,31 @@
 spring:
+  config:
+    import: file:.env[.properties]
   application:
     name: mcp-demo
+
+  ai:
+    mcp:
+      server:
+        protocol: STATELESS
+        type: sync
+        name: "Task MCP demo"
+        instructions: >-
+          Manages a simple task list. Create tasks with add_task, look them up with get_task or
+          get_task_list, and move them through the statuses NEW, IN_PROGRESS, DONE and CANCELLED
+          with update_task_status.
+        streamable-http:
+          mcp-endpoint: /mcp
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:mysecretpassword}
+
+  jpa:
+    open-in-view: false
+
+app:
+  mcp:
+    api-key:
+      secret: ${MCP_API_KEY_SECRET}
